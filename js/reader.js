@@ -1,42 +1,47 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Create an instance of NoteReader
+    const noteReader = new NoteReader();
+
     // Retrieve and display notes every 2 seconds
     setInterval(function () {
-        retrieveAndDisplayNotes();
+        noteReader.retrieveAndDisplayNotes();
     }, 2000);
 });
 
-function retrieveAndDisplayNotes() {
-    const notesContainer = document.getElementById("notes-container");
-    const lastRetrievedTime = document.getElementById("last-retrieved-time");
+class NoteReader {
+    constructor() {
+        this.notesContainer = document.getElementById("notes-container");
+        this.lastRetrievedTime = document.getElementById("last-retrieved-time");
+    }
 
-    // Retrieve existing notes from local storage
-    const existingNotes = JSON.parse(localStorage.getItem("notes")) || [];
+    retrieveAndDisplayNotes() {
+        // Retrieve existing notes from local storage
+        const existingNotes = JSON.parse(localStorage.getItem("notes")) || [];
 
-    // Display existing notes
-    notesContainer.innerHTML = ""; // Clear existing notes
+        // Display existing notes
+        this.notesContainer.innerHTML = ""; // Clear existing notes
 
-    existingNotes.forEach((note, index) => {
-        const noteDiv = createNoteDiv(index, note.content);
-        notesContainer.appendChild(noteDiv);
-    });
+        existingNotes.forEach((note, index) => {
+            const noteDiv = this.createNoteDiv(index, note.content);
+            this.notesContainer.appendChild(noteDiv);
+        });
 
-    // Display the time of the last retrieval
-    displayLastRetrievedTime();
-}
+        // Display the time of the last retrieval
+        this.displayLastRetrievedTime();
+    }
 
-function createNoteDiv(index, content) {
-    // Create a div to display a note
-    const noteDiv = document.createElement("div");
-    noteDiv.innerHTML = `
-        <p>Note ${index + 1}:</p>
-        <p>${content}</p>
-        <textarea id="note-${index}" class="note-textarea">${content}</textarea>
-    `;
-    return noteDiv;
-}
+    createNoteDiv(index, content) {
+        // Create a div to display a note
+        const noteDiv = document.createElement("div");
+        noteDiv.innerHTML = `
+            <p>Note ${index + 1}:</p>
+            <textarea id="note-${index}" class="note-textarea">${content}</textarea>
+        `;
+        return noteDiv;
+    }
 
-function displayLastRetrievedTime() {
-    const lastRetrievedTime = document.getElementById("last-retrieved-time");
-    const retrievalTime = new Date().toLocaleTimeString();
-    lastRetrievedTime.textContent = `Last retrieved at: ${retrievalTime}`;
+    displayLastRetrievedTime() {
+        const retrievalTime = new Date().toLocaleTimeString();
+        this.lastRetrievedTime.textContent = `Last retrieved at: ${retrievalTime}`;
+    }
 }
