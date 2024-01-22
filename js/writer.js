@@ -136,5 +136,11 @@ class NoteManager {
     displayUserFeedback(message) {
         alert(message);
     }
+
+    
 }    
     
+document.addEventListener("DOMContentLoaded", function () {
+    // Create an instance of NoteManager
+    const noteManager = new NoteManager();
+});

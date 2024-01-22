@@ -45,3 +45,9 @@ class NoteReader {
         this.lastRetrievedTime.textContent = `Last retrieved at: ${retrievalTime}`;
     }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Create an instance of NoteReader
+    const noteReader = new NoteReader();
+
+});
